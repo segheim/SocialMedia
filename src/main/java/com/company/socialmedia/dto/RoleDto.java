@@ -1,2 +1,11 @@
-package com.company.socialmedia.dto;public class RoleDto {
+package com.company.socialmedia.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class RoleDto {
+    private Long id;
+    private String name;
 }

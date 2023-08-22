@@ -1,6 +1,5 @@
-package com.company.socialmedia.service.impl;
+package com.company.socialmedia.entity;
 
-import com.company.socialmedia.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
