@@ -4,22 +4,25 @@ import com.company.socialmedia.dto.UserDto;
 import com.company.socialmedia.entity.EnumRole;
 import com.company.socialmedia.entity.User;
 import com.company.socialmedia.entity.UserDetailsImpl;
-import com.company.socialmedia.exception.ServiceException;
+import com.company.socialmedia.exception.NotFoundExceptionService;
 import com.company.socialmedia.mapper.UserMapper;
 import com.company.socialmedia.repository.RoleRepository;
 import com.company.socialmedia.repository.UserRepository;
 import com.company.socialmedia.service.UserService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Validated
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
@@ -35,12 +38,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDto readById(Long id) {
-        return userMapper.toDto(userRepository.findById(id).orElseThrow(() -> new ServiceException("User not found")));
+        return userMapper.toDto(userRepository.findById(id).orElseThrow(() -> new NotFoundExceptionService("User not found")));
     }
 
     @Override
     public User readByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow(() -> new ServiceException("User not found"));
+        return userRepository.findUserByEmail(email).orElseThrow(() -> new NotFoundExceptionService("User not found"));
     }
 
     @Override
@@ -48,16 +51,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.toDtoList(userRepository.findAll(pageable).getContent());
     }
 
-    public long create(UserDto userDto) {
+    public long create(@Valid UserDto userDto) {
         User user = userMapper.fromDto(userDto);
-        user.setRoles(Set.of(roleRepository.findByName(EnumRole.USER).orElseThrow(() ->new ServiceException("Role not found"))));
+        user.setRoles(Set.of(roleRepository.findByName(EnumRole.USER).orElseThrow(() ->new NotFoundExceptionService("Role not found"))));
         User saveUser = userRepository.save(user);
         return saveUser.getId();
     }
 
     @Override
-    public long update(UserDto userDto, Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ServiceException("User not found"));
+    public long update(@Valid UserDto userDto, Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundExceptionService("User not found"));
         userMapper.updateUserFromDto(userDto, user);
         return userRepository.save(user).getId();
     }

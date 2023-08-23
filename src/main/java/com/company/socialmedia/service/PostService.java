@@ -10,6 +10,6 @@ public interface PostService {
     List<PostDto> readByUserId(Long id);
 
     long create(PostDto postDto);
-    long update(Long id);
+    long update(PostDto postDto, Long id);
     long delete(Long id);
 }

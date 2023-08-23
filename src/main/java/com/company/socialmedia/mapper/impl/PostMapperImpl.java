@@ -36,7 +36,7 @@ public class PostMapperImpl implements PostMapper {
         return Post.builder()
                 .user(user)
                 .title(postDto.getTitle())
-                .text(postDto.getPicture())
+                .text(postDto.getText())
                 .picture(postDto.getPicture())
                 .build();
     }

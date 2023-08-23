@@ -29,9 +29,29 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> create(PostDto postDto) {
+    public ResponseEntity<Long> create(@RequestBody PostDto postDto) {
         try {
             return new ResponseEntity<>(postService.create(postDto), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Long> update(@RequestBody PostDto postDto, @PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity<>(postService.update(postDto, id), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> remove(@PathVariable(value = "id") Long id) {
+        try {
+            return new ResponseEntity<>(postService.delete(id), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

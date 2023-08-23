@@ -2,7 +2,7 @@ package com.company.socialmedia.service;
 
 import com.company.socialmedia.dto.UserDto;
 import com.company.socialmedia.entity.User;
-import com.company.socialmedia.exception.ServiceException;
+import com.company.socialmedia.exception.NotFoundExceptionService;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto readById(Long id) throws ServiceException;
+    UserDto readById(Long id) throws NotFoundExceptionService;
     User readByEmail(String email);
     List<UserDto> readAll(Pageable pageable);
     long create(UserDto userDto);

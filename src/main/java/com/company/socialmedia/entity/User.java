@@ -1,6 +1,10 @@
 package com.company.socialmedia.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.HashSet;
@@ -20,12 +24,16 @@ public class User {
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
+    @NotBlank
+    @Size(max = 60)
     @Column(name = "NAME")
     private String name;
 
+    @Email
     @Column(name = "EMAIL")
     private String email;
 
+    @NotBlank
     @Column(name = "PASSWORD")
     private String password;
 
