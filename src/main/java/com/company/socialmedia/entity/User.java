@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "EMAIL")})
-@Data
+@Table(name = "USERS")
+@Getter
+@Setter
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,11 +28,11 @@ public class User {
 
     @NotBlank
     @Size(max = 60)
-    @Column(name = "NAME")
+    @Column(name = "NAME", unique = true)
     private String name;
 
     @Email
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     @NotBlank
@@ -47,4 +49,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
 
+    @ManyToMany
+    private List<User> friends;
+
+    @ManyToMany
+    private List<User> subscribeTo;
+
+    @ManyToMany
+    private List<User> friendshipRequest;
 }

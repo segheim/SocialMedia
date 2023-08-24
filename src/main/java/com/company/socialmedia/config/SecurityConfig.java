@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
                                 .requestMatchers("/admin").hasRole("ADMIN")
-                                .requestMatchers("/users").authenticated()
+                                .requestMatchers("/users/**").authenticated()
+                                .requestMatchers("/v2").authenticated()
                                 .anyRequest().permitAll())
                 .exceptionHandling((exceptionHandling) ->
                         new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

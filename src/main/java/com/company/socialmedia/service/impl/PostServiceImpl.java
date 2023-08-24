@@ -9,12 +9,10 @@ import com.company.socialmedia.mapper.PostMapper;
 import com.company.socialmedia.repository.PostRepository;
 import com.company.socialmedia.repository.UserRepository;
 import com.company.socialmedia.service.PostService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +52,7 @@ public class PostServiceImpl implements PostService {
     public long delete(Long id) {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails();
         Optional<User> user = userRepository.findUserByName(userDetails.getUsername());
-        if(!user.isPresent() && user.get().getId() != id) {
+        if (!user.isPresent() && user.get().getId() != id) {
             log.error("Absent permissions for delete");
             throw new NotFoundExceptionService("Absent permissions");
         }

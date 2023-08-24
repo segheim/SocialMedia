@@ -65,6 +65,14 @@ public class HandlerExceptionAdvice {
                 .body(new ErrorInfo(exception.getMessage()));
     }
 
+    @ExceptionHandler(AlreadyExistException.class)
+    public ResponseEntity<ErrorInfo> alreadyExistException(AlreadyExistException exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity
+                .status(HttpStatus.ALREADY_REPORTED)
+                .body(new ErrorInfo(exception.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorInfo> handleAllException(Exception exception) {
         log.error(exception.getMessage(), exception);

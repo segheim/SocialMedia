@@ -2,6 +2,7 @@ package com.company.socialmedia.service;
 
 import com.company.socialmedia.dto.UserDto;
 import com.company.socialmedia.entity.User;
+import com.company.socialmedia.exception.AlreadyExistException;
 import com.company.socialmedia.exception.NotFoundExceptionService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,8 @@ public interface UserService {
     UserDto readById(Long id) throws NotFoundExceptionService;
     User readByEmail(String email);
     List<UserDto> readAll(Pageable pageable);
-    long create(@Valid UserDto userDto);
+    long create(@Valid UserDto userDto) throws AlreadyExistException;
     long update(@Valid UserDto userDto, Long id);
+    long addFriend(Long id);
+    long addFriendshipRequest(Long id);
 }

@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
+<configuration>
 
-<configuration scan="true">
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} – %logger{36} – %msg%n" />
+
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%highlight{%d{HH:mm:ss.SSS} %-5level %logger{36}.%M() @%L - %msg%n}{FATAL=red blink, ERROR=red, WARN=magenta, INFO=blue, DEBUG=green bold, TRACE=yellow}
-            </pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
+
+    <logger name="com.howtodoinjava.app" level="trace" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+
 </configuration>

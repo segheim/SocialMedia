@@ -1,4 +1,3 @@
-HELP.md
 .gradle
 /gradle
 build/
@@ -42,4 +41,3 @@ out/
 /gradle/
 /.idea/
 /build/
-
