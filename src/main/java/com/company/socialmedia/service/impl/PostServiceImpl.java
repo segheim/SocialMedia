@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-@Validated
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
@@ -36,7 +35,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public long create(@Valid PostDto postDto) {
+    public long create(PostDto postDto) {
         Post post = postMapper.fromDto(postDto);
         User user = userRepository.findById(post.getUser().getId()).orElseThrow(() -> new NotFoundExceptionService("User not found"));
         post.setUser(user);
@@ -45,7 +44,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public long update(@Valid PostDto postDto, Long id) {
+    public long update(PostDto postDto, Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new NotFoundExceptionService("Post not found"));
         postMapper.updatePostFromDto(postDto, post);
         return postRepository.save(post).getId();

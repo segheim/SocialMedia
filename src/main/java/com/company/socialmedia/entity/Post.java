@@ -20,7 +20,6 @@ public class Post {
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;

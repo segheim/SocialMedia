@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -52,6 +53,15 @@ public class HandlerExceptionAdvice {
         log.error(exception.getMessage(), exception);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorInfo(exception.getMessage()));
+    }
+
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorInfo> badCredentialsException(BadCredentialsException exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorInfo(exception.getMessage()));
     }
 

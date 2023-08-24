@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Validated
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.toDtoList(userRepository.findAll(pageable).getContent());
     }
 
-    public long create(@Valid UserDto userDto) {
+    public long create(UserDto userDto) {
         User user = userMapper.fromDto(userDto);
         user.setRoles(Set.of(roleRepository.findByName(EnumRole.USER).orElseThrow(() ->new NotFoundExceptionService("Role not found"))));
         User saveUser = userRepository.save(user);
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public long update(@Valid UserDto userDto, Long id) {
+    public long update(UserDto userDto, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundExceptionService("User not found"));
         userMapper.updateUserFromDto(userDto, user);
         return userRepository.save(user).getId();
